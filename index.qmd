@@ -155,6 +155,8 @@ observDF = pd.DataFrame({
 #| label: tbl-observations
 #| tbl-cap: "Observed data with known true relationships"
 observDF
+
+
 ```
 
 Verify for yourself that $Anxiety = Stress + 0.1 \times Time$ holds perfectly in every row. Notice the additional `StressSurvey` column—a survey-based proxy for measuring stress levels without expensive blood tests. The proxy has a *monotonic* (and sorta-kinda *linear*) relationship with actual stress (see @fig-stress-proxy).
@@ -205,6 +207,41 @@ Are your estimates close? If not, your model is telling a wrong story -- even if
 ### Questions for 75% Grade
 
 1. **Bivariate Regression: Anxiety on StressSurvey.** Run a bivariate regression of Anxiety on StressSurvey. What are the estimated coefficients? How do they compare to the true relationship?
+
+Below shows a bivariate regression of Anxiety on Stress Survey. The estimated coefficients are as follows.
+```{python}
+#| label: bivariate-regression-stress-survey
+#| echo: true
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+x1 = observDF['StressSurvey'].values
+y = observDF['Anxiety'].values
+
+X = x1.reshape(-1, 1)
+model_biv = LinearRegression()
+model_biv.fit(X, y)
+
+print(f"Coefficient (StressSurvey): {model_biv.coef_[0]:.3f}")
+print(f"Intercept: {model_biv.intercept_:.3f}")
+print(f"R-squared: {r2_score(y, model_biv.predict(X)):.3f}")
+
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.scatter(x1, y, alpha=0.7, edgecolors='black', linewidths=0.5)
+x_line = np.linspace(x1.min(), x1.max(), 100)
+y_line = model_biv.predict(x_line.reshape(-1, 1))
+ax.plot(x_line, y_line, color='C3', linewidth=2, label='Line of best fit')
+ax.set_xlabel('StressSurvey')
+ax.set_ylabel('Anxiety')
+ax.set_title('Bivariate regression: Anxiety on StressSurvey')
+ax.legend()
+ax.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
 
 2. **Visualization: StressSurvey vs Anxiety.** Create a scatter plot with the regression line showing the relationship between StressSurvey and Anxiety. Comment on the fit and any potential issues.
 
