@@ -208,10 +208,10 @@ Are your estimates close? If not, your model is telling a wrong story -- even if
 
 1. **Bivariate Regression: Anxiety on StressSurvey.** Run a bivariate regression of Anxiety on StressSurvey. What are the estimated coefficients? How do they compare to the true relationship?
 
-Below shows a bivariate regression of Anxiety on Stress Survey. The estimated coefficients are as follows.
+Below shows a bivariate regression of Anxiety on Stress Survey. The estimated coefficients are as follows. The intercept is off by -1.524 (the correct intercept was 0), and the stressSurvey coefficient of 1.047 was surprisingly close to the correct coefficient of 1! It was only off by 4.7%. 
 ```{python}
 #| label: bivariate-regression-stress-survey
-#| echo: true
+#| echo: false
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -244,6 +244,13 @@ plt.show()
 ```
 
 2. **Visualization: StressSurvey vs Anxiety.** Create a scatter plot with the regression line showing the relationship between StressSurvey and Anxiety. Comment on the fit and any potential issues.
+
+
+
+
+
+
+
 
 3. **Bivariate Regression: Anxiety on Time.** Run a bivariate regression of Anxiety on Time. What are the estimated coefficients? How do they compare to the true relationship?
 
