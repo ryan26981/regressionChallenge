@@ -361,10 +361,11 @@ Both models show statistical significants in all of their coefficient estimates.
 
 8. **Real-World Implications.** For each of the two multiple regression models, assume their outputs were published in academic journals and then picked up by the popular press. What headline about time spent on social media and its effect on anxiety would you expect from a press outlet covering the first model? What headline for the second model? Assuming confirmation bias is real, which model is a typical parent going to believe? Which model will Facebook, Instagram, and TikTok executives prefer?
 
-First model: It wasn't that Damn Phone! Social Media might be the next Anxiety Medication
+First model: It wasn't that Damn Phone! Social Media might be the next Anxiety Medication  
 Second Model: Put the phone down! Social Media use found to increase stress by the minute!
 
 A parent is typically going to believe the second models interpretation, but social media executives will likely prefer the first models interpreation, even if it isn't necessarily true. 
+
 ### Question for 100% Grade
 
 9. **Avoiding Misleading Statistical Significance.** Reflect on this tip: split the sample into meaningful subsets ("statistical regimes") and use graphical diagnostics for linearity rather than blind reliance on "canned" regressions. Apply this approach to the multiple regression of Anxiety on both StressSurvey and Time by analyzing a smartly chosen subset of the data. What specific subset did you choose and why? Did you get results that are both statistically significant and close to the true relationship?
