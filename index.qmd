@@ -300,9 +300,58 @@ plt.show()
 
 5. **Multiple Regression: StressSurvey + Time.** Run a multiple regression of Anxiety on both **StressSurvey** and Time. What are the estimated coefficients? How do they compare to the true coefficients?
 
+The coefficients are as seen below. The coefficients for Stress Survey are off by 43%, while the intercept is off by .589 units. These aren't too wildly off, but the time coefficient is, -2800% off in fact. This is likely because of issues in running regressions when two variables are correlated with one another. The coefficients lose their interpretability and reliability. 
+
+```{python}
+#| label: multiple-regression-stresssurvey-time
+#| echo: false
+
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+y = observDF['Anxiety'].values
+X = np.column_stack([
+    observDF['StressSurvey'].values,
+    observDF['Time'].values,
+])
+model_stresssurvey_time = LinearRegression()
+model_stresssurvey_time.fit(X, y)
+
+print(f"Coefficient (StressSurvey): {model_stresssurvey_time.coef_[0]:.3f}")
+print(f"Coefficient (Time): {model_stresssurvey_time.coef_[1]:.3f}")
+print(f"Intercept: {model_stresssurvey_time.intercept_:.3f}")
+print(f"R-squared: {r2_score(y, model_stresssurvey_time.predict(X)):.3f}")
+```
+
 ### Questions for 85% Grade
 
 6. **Multiple Regression: Stress + Time.** Run a multiple regression of Anxiety on both **Stress** and Time. What are the estimated coefficients? How do they compare to the true relationship?
+
+The estimated coefficients are seen below. The coefficients are perfect. They are exactly the coefficients shown in the true relationship.
+
+
+```{python}
+#| label: multiple-regression-stress-time
+#| echo: false
+
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+y = observDF['Anxiety'].values
+X = np.column_stack([
+    observDF['Stress'].values,
+    observDF['Time'].values,
+])
+model_stress_time = LinearRegression()
+model_stress_time.fit(X, y)
+
+print(f"Coefficient (Stress): {model_stress_time.coef_[0]:.3f}")
+print(f"Coefficient (Time): {model_stress_time.coef_[1]:.3f}")
+print(f"Intercept: {model_stress_time.intercept_:.3f}")
+print(f"R-squared: {r2_score(y, model_stress_time.predict(X)):.3f}")
+```
 
 7. **Model Comparison.** Compare the R-squared values and coefficient interpretations between the two multiple regression models (Questions 5 and 6). Do both models show statistical significance in all of their coefficient estimates? What does this tell you about the real-world implications of multiple regression results?
 
