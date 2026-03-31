@@ -236,7 +236,7 @@ y_line = model_biv.predict(x_line.reshape(-1, 1))
 ax.plot(x_line, y_line, color='C3', linewidth=2, label='Line of best fit')
 ax.set_xlabel('StressSurvey')
 ax.set_ylabel('Anxiety')
-ax.set_title('Bivariate regression: Anxiety on StressSurvey')
+ax.set_title('Perceived Level of Stress is Highly Correlated with Anxiety')
 ax.legend()
 ax.grid(True, alpha=0.3)
 plt.tight_layout()
@@ -246,15 +246,57 @@ plt.show()
 2. **Visualization: StressSurvey vs Anxiety.** Create a scatter plot with the regression line showing the relationship between StressSurvey and Anxiety. Comment on the fit and any potential issues.
 
 
-
-
-
+See Scatter plot above. The fit is strong: R^2 is .901 meaning 90.1% of the variation in the data can be explained by the regression model. No issues to note. 
 
 
 
 3. **Bivariate Regression: Anxiety on Time.** Run a bivariate regression of Anxiety on Time. What are the estimated coefficients? How do they compare to the true relationship?
 
+Below are the estimated coefficients. They are are poor estimated compared to the true relationship. the intercept is off by -3.680 and the time coefficient is off by 530%
+
+```{python}
+#| label: bivariate-regression-time
+#| echo: false
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+time_x = observDF['Time'].values
+y = observDF['Anxiety'].values
+
+X = time_x.reshape(-1, 1)
+model_time = LinearRegression()
+model_time.fit(X, y)
+
+print(f"Coefficient (Time): {model_time.coef_[0]:.3f}")
+print(f"Intercept: {model_time.intercept_:.3f}")
+print(f"R-squared: {r2_score(y, model_time.predict(X)):.3f}")
+```
+
 4. **Visualization: Time vs Anxiety.** Create a scatter plot with the regression line showing the relationship between Time and Anxiety. Comment on the fit and any potential issues.
+
+Below is a scatterplot of Time vs Anxiety. The fit visually is poor, and that is reinforced by the R-squared term of .563. It appears that the relationship, while positive, is not linear. The data seems to follow a curve. Perhaps exponential or polynomial would result in a better interpretation of the data. 
+
+```{python}
+#| label: fig-time-anxiety
+#| fig-cap: "Time vs Anxiety with line of best fit"
+#| echo: false
+
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.scatter(time_x, y, alpha=0.7, edgecolors='black', linewidths=0.5)
+x_line = np.linspace(time_x.min(), time_x.max(), 100)
+y_line = model_time.predict(x_line.reshape(-1, 1))
+ax.plot(x_line, y_line, color='C3', linewidth=2, label='Line of best fit')
+ax.set_xlabel('Time')
+ax.set_ylabel('Anxiety')
+ax.set_title('Time vs Anxiety')
+ax.legend()
+ax.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
 
 5. **Multiple Regression: StressSurvey + Time.** Run a multiple regression of Anxiety on both **StressSurvey** and Time. What are the estimated coefficients? How do they compare to the true coefficients?
 
